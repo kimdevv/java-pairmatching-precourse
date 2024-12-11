@@ -12,4 +12,8 @@ public class MissionPair {
         this.missionName = missionName;
         this.pairNames = pairNames;
     }
+
+    public List<String> getPairNames() {
+        return this.pairNames;
+    }
 }

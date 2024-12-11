@@ -8,6 +8,7 @@ import pairmatching.model.LevelPairs;
 import pairmatching.model.MissionPair;
 import pairmatching.utility.*;
 import pairmatching.view.InputView;
+import pairmatching.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,6 @@ public class PairMatcherController {
             pairMatching();
         }
         if (featureNumber == 2) { // 페어 조회
-
         }
         if (featureNumber == 3) { // 페어 초기화
 
@@ -73,7 +73,9 @@ public class PairMatcherController {
             if (this.levelPairsList.get(trackLevelMissionDto.level()).checkDuplicate(pairNames)) {
                 continue;
             }
-            this.missionPairs.add(new MissionPair(trackLevelMissionDto.track(), trackLevelMissionDto.courseName(), pairNames));
+            MissionPair newPair = new MissionPair(trackLevelMissionDto.track(), trackLevelMissionDto.courseName(), pairNames);
+            this.missionPairs.add(newPair);
+            OutputView.outputPairResult(newPair.getPairNames());
         }
     }
 

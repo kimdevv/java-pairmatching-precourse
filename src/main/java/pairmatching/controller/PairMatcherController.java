@@ -1,5 +1,7 @@
 package pairmatching.controller;
 
+import pairmatching.enumerate.Course;
+import pairmatching.utility.CourseNameParser;
 import pairmatching.utility.FeatureNumberValidator;
 import pairmatching.utility.StringToIntParser;
 import pairmatching.view.InputView;
@@ -28,7 +30,7 @@ public class PairMatcherController {
 
     private void divideByFeatureNumber(int featureNumber) {
         if (featureNumber == 1) { // 페어 매칭
-
+            pairMatching();
         }
         if (featureNumber == 2) { // 페어 조회
 
@@ -36,5 +38,10 @@ public class PairMatcherController {
         if (featureNumber == 3) { // 페어 초기화
 
         }
+    }
+
+    private void pairMatching() {
+        String[] courseNames = CourseNameParser.parse(Course.values());
+        String rawMission = InputView.inputMission(courseNames);
     }
 }

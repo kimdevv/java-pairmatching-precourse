@@ -9,4 +9,8 @@ public class OutputView {
             System.out.println(pairName);
         }
     }
+
+    public static void outputReset() {
+        System.out.println("초기화 되었습니다.");
+    }
 }

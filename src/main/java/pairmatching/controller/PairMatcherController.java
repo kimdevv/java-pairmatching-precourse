@@ -17,11 +17,11 @@ public class PairMatcherController {
     Crew backendCrew;
     Crew frontendCrew;
     List<LevelPairs> levelPairsList;
-    List<MissionPair> missionPairs = new ArrayList<>();
+    List<MissionPair> missionPairs;
 
     public void run() {
         initiateCrewNames();
-        initiateLevelPairsList();
+        resetPairs();
         while (true) {
             int featureNumber = inputFeature();
             if (featureNumber == 0) {
@@ -36,6 +36,11 @@ public class PairMatcherController {
         String frontendCrewNames = FileReader.getCrewNamesFromFile("src/main/resources/frontend-crew.md");
         backendCrew = new Crew(backendCrewNames);
         frontendCrew = new Crew(frontendCrewNames);
+    }
+
+    private void resetPairs() {
+        initiateLevelPairsList();
+        initiateMissionPairs();
     }
 
     private int inputFeature() {
@@ -57,12 +62,17 @@ public class PairMatcherController {
             pairCheck();
         }
         if (featureNumber == 3) { // 페어 초기화
-
+            resetPairs();
+            OutputView.outputReset();
         }
     }
 
     private void pairMatching() {
         TrackLevelMissionDto trackLevelMissionDto = inputTrackLevelMission();
+        MissionPair existPair = getExistPair(trackLevelMissionDto);
+        if (existPair != null) {
+            askReMatching(existPair);
+        }
         for (int i=0; i<=3; i++) {
             if (i==3) {
                 throw new IllegalArgumentException(ExceptionEnum.INVALID_INPUT.getMessage());
@@ -80,6 +90,15 @@ public class PairMatcherController {
         }
     }
 
+    private void askReMatching(MissionPair existPair) {
+        String answer = InputView.inputReMatching();
+        if (answer.equals("예")) {
+            this.missionPairs.remove(existPair);
+            return;
+        }
+        pairMatching();
+    }
+
     private TrackLevelMissionDto inputTrackLevelMission() {
         String[] courseNames = CourseNameParser.parse(Course.values());
         String rawMission = InputView.inputMission(courseNames);
@@ -94,14 +113,23 @@ public class PairMatcherController {
         return levelPairsList;
     }
 
+    private void initiateMissionPairs() {
+        this.missionPairs = new ArrayList<>();
+    }
+
     private void pairCheck() {
         TrackLevelMissionDto trackLevelMissionDto = inputTrackLevelMission();
-        MissionPair thePair = this.missionPairs.stream()
-                .filter(missionPair -> {
-                    return missionPair.getTrack() == trackLevelMissionDto.track() &&
-                            missionPair.getMissionName() == trackLevelMissionDto.courseName();
-                })
-                .findFirst().orElseThrow(() -> new IllegalArgumentException(ExceptionEnum.INVALID_INPUT.getMessage()));
+        MissionPair thePair = getExistPair(trackLevelMissionDto);
+        if (thePair == null) {
+            throw new IllegalArgumentException(ExceptionEnum.INVALID_INPUT.getMessage());
+        }
         OutputView.outputPairResult(thePair.getPairNames());
+    }
+
+    private MissionPair getExistPair(TrackLevelMissionDto trackLevelMissionDto) {
+        return this.missionPairs.stream()
+                .filter(missionPair -> missionPair.getTrack() == trackLevelMissionDto.track() &&
+                        missionPair.getMissionName() == trackLevelMissionDto.courseName())
+                .findFirst().orElse(null);
     }
 }

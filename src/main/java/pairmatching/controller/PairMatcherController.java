@@ -54,6 +54,7 @@ public class PairMatcherController {
             pairMatching();
         }
         if (featureNumber == 2) { // 페어 조회
+            pairCheck();
         }
         if (featureNumber == 3) { // 페어 초기화
 
@@ -91,5 +92,16 @@ public class PairMatcherController {
             levelPairsList.add(new LevelPairs(i));
         }
         return levelPairsList;
+    }
+
+    private void pairCheck() {
+        TrackLevelMissionDto trackLevelMissionDto = inputTrackLevelMission();
+        MissionPair thePair = this.missionPairs.stream()
+                .filter(missionPair -> {
+                    return missionPair.getTrack() == trackLevelMissionDto.track() &&
+                            missionPair.getMissionName() == trackLevelMissionDto.courseName();
+                })
+                .findFirst().orElseThrow(() -> new IllegalArgumentException(ExceptionEnum.INVALID_INPUT.getMessage()));
+        OutputView.outputPairResult(thePair.getPairNames());
     }
 }

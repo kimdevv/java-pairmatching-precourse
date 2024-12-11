@@ -13,6 +13,14 @@ public class MissionPair {
         this.pairNames = pairNames;
     }
 
+    public String getTrack() {
+        return this.track;
+    }
+
+    public String getMissionName() {
+        return this.missionName;
+    }
+
     public List<String> getPairNames() {
         return this.pairNames;
     }

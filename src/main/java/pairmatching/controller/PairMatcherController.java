@@ -23,11 +23,15 @@ public class PairMatcherController {
         initiateCrewNames();
         resetPairs();
         while (true) {
-            int featureNumber = inputFeature();
-            if (featureNumber == 0) {
-                break;
+            try {
+                int featureNumber = inputFeature();
+                if (featureNumber == 0) {
+                    break;
+                }
+                divideByFeatureNumber(featureNumber);
+            } catch (IllegalArgumentException exception) {
+                System.out.println(exception.getMessage());
             }
-            divideByFeatureNumber(featureNumber);
         }
     }
 

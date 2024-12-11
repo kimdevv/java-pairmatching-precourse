@@ -21,7 +21,7 @@ public class LevelPairs {
                 }
             }
         }
-        registerToLevelPairs();
+        registerToLevelPairs(pairNames);
         return false;
     }
 

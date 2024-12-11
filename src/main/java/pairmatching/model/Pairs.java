@@ -15,6 +15,10 @@ public class Pairs {
         String[] splittedNames = rawNames.split("\n");
         Arrays.stream(splittedNames)
                 .forEach(crewNames::add);
-        shuffledCrew = Randoms.shuffle(crewNames);
+        shuffleCrew();
+    }
+
+    private void shuffleCrew() {
+        shuffledCrew = Randoms.shuffle(this.crewNames);
     }
 }

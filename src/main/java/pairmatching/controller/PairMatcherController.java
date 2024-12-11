@@ -1,9 +1,11 @@
 package pairmatching.controller;
 
+import pairmatching.dto.TrackLevelMissionDto;
 import pairmatching.enumerate.Course;
 import pairmatching.utility.CourseNameParser;
 import pairmatching.utility.FeatureNumberValidator;
 import pairmatching.utility.StringToIntParser;
+import pairmatching.utility.TrackLevelMissionParser;
 import pairmatching.view.InputView;
 
 public class PairMatcherController {
@@ -43,5 +45,6 @@ public class PairMatcherController {
     private void pairMatching() {
         String[] courseNames = CourseNameParser.parse(Course.values());
         String rawMission = InputView.inputMission(courseNames);
+        TrackLevelMissionDto trackLevelMissionDto = TrackLevelMissionParser.parse(rawMission);
     }
 }

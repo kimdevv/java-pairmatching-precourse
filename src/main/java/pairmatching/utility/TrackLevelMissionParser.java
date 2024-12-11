@@ -1,15 +1,19 @@
 package pairmatching.utility;
 
+import pairmatching.dto.TrackLevelMissionDto;
 import pairmatching.enumerate.Course;
 import pairmatching.enumerate.ExceptionEnum;
 
 public class TrackLevelMissionParser {
-    public static void parse(String rawMission) {
+    public static TrackLevelMissionDto parse(String rawMission) {
         String[] splittedMission = rawMission.split(",", 0);
         validateSplit(splittedMission);
         validateTrack(splittedMission[0]);
         validateLevel(splittedMission[1]);
         validateMission(splittedMission[2]);
+
+        return new TrackLevelMissionDto(splittedMission[0],
+                StringToIntParser.parse(splittedMission[1].substring(2)), splittedMission[2]);
     }
 
     private static void validateSplit(String[] splittedMission) {

@@ -43,8 +43,14 @@ public class PairMatcherController {
     }
 
     private void pairMatching() {
+        TrackLevelMissionDto trackLevelMissionDto = inputTrackLevelMission();
+
+    }
+
+    private TrackLevelMissionDto inputTrackLevelMission() {
         String[] courseNames = CourseNameParser.parse(Course.values());
         String rawMission = InputView.inputMission(courseNames);
-        TrackLevelMissionDto trackLevelMissionDto = TrackLevelMissionParser.parse(rawMission);
+        return TrackLevelMissionParser.parse(rawMission);
+
     }
 }

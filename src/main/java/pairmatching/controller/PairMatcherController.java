@@ -2,14 +2,16 @@ package pairmatching.controller;
 
 import pairmatching.dto.TrackLevelMissionDto;
 import pairmatching.enumerate.Course;
-import pairmatching.utility.CourseNameParser;
-import pairmatching.utility.FeatureNumberValidator;
-import pairmatching.utility.StringToIntParser;
-import pairmatching.utility.TrackLevelMissionParser;
+import pairmatching.model.Pairs;
+import pairmatching.utility.*;
 import pairmatching.view.InputView;
 
 public class PairMatcherController {
+    Pairs backendPairs;
+    Pairs frontendPairs;
+
     public void run() {
+        initiateCrewNames();
         while (true) {
             int featureNumber = inputFeature();
             if (featureNumber == 0) {
@@ -17,6 +19,13 @@ public class PairMatcherController {
             }
             divideByFeatureNumber(featureNumber);
         }
+    }
+
+    private void initiateCrewNames() {
+        String backendCrewNames = FileReader.getCrewNamesFromFile("src/main/resources/backend-crew.md");
+        String frontendCrewNames = FileReader.getCrewNamesFromFile("src/main/resources/frontend-crew.md");
+        backendPairs = new Pairs(backendCrewNames);
+        frontendPairs = new Pairs(frontendCrewNames);
     }
 
     private int inputFeature() {
@@ -44,7 +53,6 @@ public class PairMatcherController {
 
     private void pairMatching() {
         TrackLevelMissionDto trackLevelMissionDto = inputTrackLevelMission();
-
     }
 
     private TrackLevelMissionDto inputTrackLevelMission() {

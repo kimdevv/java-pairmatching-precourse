@@ -11,24 +11,24 @@ public class Crew {
     private List<String> shuffledCrew;
 
     public Crew(String rawNames) {
-        crewNames = new ArrayList<>();
+        this.crewNames = new ArrayList<>();
         String[] splittedNames = rawNames.split("\n");
         Arrays.stream(splittedNames)
-                .forEach(crewNames::add);
+                .forEach(this.crewNames::add);
         shuffleCrew();
     }
 
     private void shuffleCrew() {
-        shuffledCrew = Randoms.shuffle(this.crewNames);
+        this.shuffledCrew = Randoms.shuffle(this.crewNames);
     }
 
     public List<String> getRandomNames() {
         shuffleCrew();
         List<String> names = new ArrayList<>();
-        for (int i=0; i<shuffledCrew.size()/2; i++) {
-            String pairName = shuffledCrew.get(i*2) + " : " + shuffledCrew.get(i*2+1);
-            if(shuffledCrew.size()%2 == 1 && i==shuffledCrew.size()/2-1) {
-                pairName += " : " + shuffledCrew.get(i*2+2);
+        for (int i=0; i<this.shuffledCrew.size()/2; i++) {
+            String pairName = this.shuffledCrew.get(i*2).trim() + " : " + this.shuffledCrew.get(i*2+1).trim();
+            if(this.shuffledCrew.size()%2 == 1 && i==this.shuffledCrew.size()/2-1) {
+                pairName += " : " + this.shuffledCrew.get(i*2+2).trim();
             }
             names.add(pairName);
         }

@@ -6,7 +6,7 @@ import pairmatching.enumerate.ExceptionEnum;
 
 public class TrackLevelMissionParser {
     public static TrackLevelMissionDto parse(String rawMission) {
-        String[] splittedMission = rawMission.split(",", 0);
+        String[] splittedMission = rawMission.split(",");
         validateSplit(splittedMission);
         validateTrack(splittedMission[0]);
         validateLevel(splittedMission[1]);

@@ -7,10 +7,11 @@ public class CourseNameParser {
         String[] courseNames = {"", "", "", "", "", ""};
         for (Course course : courses) {
             courseNames[course.getLevel()] += course.getName() + " | ";
-            System.out.println(courseNames[course.getLevel()]);
         }
-        for (String courseName : courseNames) {
-            courseName = courseName.substring(0, courseName.lastIndexOf(" | "));
+        for (int i=1; i<=5; i++) {
+            if (!courseNames[i].equals("")) {
+                courseNames[i] = courseNames[i].substring(0, courseNames[i].length()-3);
+            }
         }
         return courseNames;
     }

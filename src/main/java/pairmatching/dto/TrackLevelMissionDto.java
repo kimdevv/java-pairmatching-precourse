@@ -20,6 +20,6 @@ public class TrackLevelMissionDto {
     }
 
     public String courseName() {
-        return this.courseName();
+        return this.courseName;
     }
 }

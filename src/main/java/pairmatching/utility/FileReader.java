@@ -2,18 +2,17 @@ package pairmatching.utility;
 
 import pairmatching.enumerate.ExceptionEnum;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 public class FileReader {
     public static String getCrewNamesFromFile(String filePath) {
         try {
-            BufferedReader bufferedReader = new BufferedReader(new java.io.FileReader(filePath));
-            return bufferedReader.readLine();
-        } catch (FileNotFoundException exception) {
-            throw new IllegalArgumentException(ExceptionEnum.INVALID_INPUT.getMessage());
-        } catch (IOException exception2) {
+            List<String> lines = Files.readAllLines(Paths.get(filePath));
+            return String.join(System.lineSeparator(), lines);
+        } catch (IOException exception) {
             throw new IllegalArgumentException(ExceptionEnum.INVALID_INPUT.getMessage());
         }
     }

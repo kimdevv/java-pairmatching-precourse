@@ -1,5 +1,7 @@
 package pairmatching.enumerate;
 
+import pairmatching.dto.TrackLevelMissionDto;
+
 public enum Course {
     RACE(1, "자동차경주"),
     LOTTO(1, "로또"),
@@ -33,5 +35,14 @@ public enum Course {
             }
         }
         return false;
+    }
+
+    public static void validateTrackLevelMission(TrackLevelMissionDto dto) {
+        for (Course course : Course.values()) {
+            if (course.getLevel() == dto.level() && course.getName().equals(dto.courseName())) {
+                return;
+            }
+        }
+        throw new IllegalArgumentException(ExceptionEnum.INVALID_INPUT.getMessage());
     }
 }
